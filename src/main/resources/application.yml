@@ -1,0 +1,37 @@
+server:
+    port: 8085
+    servlet:
+        session:
+            timeout: 500m
+    tomcat:
+        max-http-post-size: 100000000
+        max-swallow-size: 100000000
+opera:
+  email:
+      address: edonayo@gmail.com,vahesimonyan650@gmail.com
+  image:
+      directory: D:\Desktop\temp\saturn.pinsupreme.com\images\
+  pdf:
+      directory: D:\Desktop\temp\saturn.pinsupreme.com\images\
+
+jwt:
+  secret: QWERtyuyui
+  expiration: 6000000
+  header: Authorization
+
+spring:
+    datasource:
+        password: root
+        url: jdbc:mysql://localhost:3306/shopingCart?useUnicode=yes&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+        username: root
+    servlet:
+        multipart:
+            max-file-size: 100MB
+            max-request-size: 100MB
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
