@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
                 .and()
                 .authorizeRequests()
-                .antMatchers( "/authors/**").hasAuthority("ADMIN")
+                .antMatchers( "/users/**").hasAuthority("ADMIN")
                 .anyRequest().permitAll();
 
         // Custom JWT based security filter
