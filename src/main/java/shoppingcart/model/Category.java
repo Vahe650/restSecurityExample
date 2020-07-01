@@ -1,32 +1,32 @@
 package shoppingcart.model;
+
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
 @Data
-@Table(name = "user")
-public class User {
+@Table(name = "category")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int userId;
+    private int categoryId;
     @Column
     private String name;
     @Column
-    private String surname;
-    @Column
-    private String email;
-    @Column
-    private String password;
-    @Column
-    @Enumerated(EnumType.STRING)
-    private UserType userType;
+    private int capacity;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Event> events = new ArrayList<>();
+
 
 }

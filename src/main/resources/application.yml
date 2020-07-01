@@ -6,23 +6,24 @@ server:
     tomcat:
         max-http-post-size: 100000000
         max-swallow-size: 100000000
-opera:
-  email:
-      address: edonayo@gmail.com,vahesimonyan650@gmail.com
-  image:
-      directory: D:\Desktop\temp\saturn.pinsupreme.com\images\
-  pdf:
-      directory: D:\Desktop\temp\saturn.pinsupreme.com\images\
+
 
 jwt:
   secret: QWERtyuyui
   expiration: 6000000
   header: Authorization
+  spring:
+
 
 spring:
+    hateoas:
+      use-hal-as-default-json-media-type: false
+    data:
+      rest:
+        base-path: /api
     datasource:
         password: root
-        url: jdbc:mysql://localhost:3306/shopingCart?useUnicode=yes&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+        url: jdbc:mysql://localhost:3306/home_money?verifyservercertificate=false&useSSL=false&characterEncoding=utf8&characterSetResults=utf8
         username: root
     servlet:
         multipart:

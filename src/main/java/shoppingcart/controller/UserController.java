@@ -1,7 +1,6 @@
 package shoppingcart.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,65 +10,38 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import shoppingcart.jwt.JwtTokenUtil;
 import shoppingcart.model.JwtAuthenticationRequest;
 import shoppingcart.model.User;
+import shoppingcart.model.UserType;
 import shoppingcart.repository.UserRepository;
 
-import java.util.List;
+import javax.persistence.EntityNotFoundException;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/api")
 public class UserController {
-//    {
-//        "name": "poxos",
-//            "surname": "poxosyan",
-//            "email" : "poxos@mail.com",
-//            "password": "poxos",
-//            "userType": "ADMIN"
-//    }
 
-    private AuthenticationManager authenticationManager;
-
-    private JwtTokenUtil jwtTokenUtil;
 
     private PasswordEncoder passwordEncoder;
 
-    @Qualifier("currentUserDetailsService")
-    private UserDetailsService userDetailsService;
+
     private UserRepository userRepository;
 
-    @PostMapping(value = "/auth")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) throws AuthenticationException {
-        // Perform the security
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        authenticationRequest.getEmail(),
-                        authenticationRequest.getPassword()
-                )
-        );
-        UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
 
-        final String token = jwtTokenUtil.generateToken(userDetails.getUsername());
-
-        // Return the token
-        return ResponseEntity.ok(token);
-    }
-
-    @GetMapping("/users")
-    public List<User> getAllAuthors(){
-        return userRepository.findAll();
-
-    }
-
-    @PostMapping("/saveUser")
+    @PostMapping("/save")
     public  void saveUser(@RequestBody User user){
+        user.setUserType(UserType.USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
+    @GetMapping("/byEmail")
+    public  ResponseEntity<User> getUserByEmail(@RequestParam String email){
+        return userRepository.findByEmail(email).map(user -> ResponseEntity.ok().body(user)).orElse(ResponseEntity.ok().body(null));
+
+    }
+
 
 }

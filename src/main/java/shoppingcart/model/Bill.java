@@ -14,23 +14,16 @@ import java.util.Date;
 @Builder
 @Entity
 @Data
-@Table(name = "product")
-public class Product {
+@Table(name = "bill")
+public class Bill {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column
-   private int productId;
+   private int billId;
    @Column
-   private String name ;
+   private long value ;
    @Column
-   private String type ;
-   @Column
-   private int price ;
-   @Column(columnDefinition = "datetime")
-   private Date addedDate;
-   @Column(columnDefinition = "datetime")
-   private Date updatedDate;
-   @Column
-   private int countInStock;
+   private String currency ;
+
 
 }
